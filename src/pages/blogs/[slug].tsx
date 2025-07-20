@@ -1,12 +1,12 @@
-import { getPostBySlug } from "../content";
-import { notFound } from "next/navigation";
+import { BlogPost } from "../../types";
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-    const { slug } = params;
-    const post = getPostBySlug(slug);
+interface Props {
+    post: BlogPost;
+}
 
+export default function BlogPostComponent({ post }: Props) {
     if (!post) {
-        notFound();
+        return <div>Post not found</div>;
     }
 
     const PostComponent = post.component;
@@ -34,28 +34,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <div className="prose max-w-none">
                 <PostComponent />
             </div>
-
-            <footer className="mt-8">
-                <div className="flex gap-2">
-                    {post.tags.map((tag) => (
-                        <span
-                            key={tag}
-                            className="px-3 py-1 bg-gray-100 rounded-full text-sm"
-                        >
-                            {tag}
-                        </span>
-                    ))}
-                </div>
-            </footer>
         </article>
     );
-}
-
-export async function generateStaticParams() {
-    const { getAllPosts } = await import("../content");
-    const posts = getAllPosts();
-
-    return posts.map((post) => ({
-        slug: post.slug,
-    }));
 }

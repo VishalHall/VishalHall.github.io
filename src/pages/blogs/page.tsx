@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getAllPosts } from "../content";
 import Image from "next/image";
+import { getAllPosts } from "@/content";
 
 export default function BlogPage() {
     const posts = getAllPosts();
