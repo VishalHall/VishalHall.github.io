@@ -17,7 +17,6 @@ export default function Navbar() {
                     Vishal Hall
                 </Link>
                 <div className="flex items-center justify-center gap-10">
-                    {/* <Link href="/about">About</Link> */}
                     <Link href="/blogs">Blogs</Link>
                     <Link href="/projects">Projects</Link>
                     <div className="w-[2px] h-[80%] bg-current rounded-xl"></div>
@@ -43,14 +42,6 @@ export default function Navbar() {
                                 }}
                             >
                                 Home
-                            </Link>
-                            <Link
-                                href="/about"
-                                onClick={() => {
-                                    setMenuOpen(false);
-                                }}
-                            >
-                                About
                             </Link>
                             <Link
                                 href="/blogs"
