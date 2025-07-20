@@ -5,11 +5,7 @@ const nextConfig = {
   trailingSlash: true,
   images: {
     unoptimized: true,
-  },
-  ...(process.env.NODE_ENV === 'production' && {
-    basePath: '/VishalHall.github.io',
-    assetPrefix: '/VishalHall.github.io/',
-  })
+  }
 }
 
 module.exports = nextConfig
