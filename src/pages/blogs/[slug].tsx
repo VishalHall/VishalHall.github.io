@@ -1,14 +1,13 @@
-import { BlogPost } from "../../types";
+import { notFound } from "next/navigation";
+import { getAllPosts, getPostBySlug } from "../../content";
+import { GetStaticProps, GetStaticPaths } from "next";
 
-interface Props {
-    post: BlogPost;
-}
-
-export default function BlogPostComponent({ post }: Props) {
-    if (!post) {
-        return <div>Post not found</div>;
+export default function BlogPostComponent({ slug }: { slug: any }) {
+    if (!slug) {
+        return notFound;
     }
-
+    const post = getPostBySlug(slug);
+    if (!post) return notFound;
     const PostComponent = post.component;
 
     return (
@@ -37,3 +36,27 @@ export default function BlogPostComponent({ post }: Props) {
         </article>
     );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const posts = getAllPosts();
+
+    const paths = posts.map((post) => ({
+        params: { slug: post.slug },
+    }));
+
+    return {
+        paths,
+        fallback: false,
+    };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    console.log("static props is running");
+    const slug = params?.slug as string;
+
+    return {
+        props: {
+            slug: slug,
+        },
+    };
+};
